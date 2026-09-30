@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="An interactive Python environment and language concepts lab"
+    />
+    <title>Purrfect Python Lab</title>
+    <link rel="stylesheet" href="/static/css/foundation.css?v=6" />
+    <link rel="stylesheet" href="/static/css/dashboard.css?v=3" />
+    <link rel="stylesheet" href="/static/css/responsive.css?v=3" />
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <main class="shell">
+      <nav class="navigation">
+        <div class="nav-primary">
+          <a class="brand" href="/" aria-label="Purrfect Python Lab home">
+            <span class="brand-mark">PY</span>
+            <span>Purrfect Python Lab</span>
+          </a>
+          <a class="section-link" href="/shop-lab">Modules &amp; Shop</a>
+        </div>
+        <div class="nav-links">
+          <a class="api-link" href="/docs">Explore API <span>↗</span></a>
+        </div>
+      </nav>
+
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Runtime · language concepts · FastAPI</p>
+          <h1>Code always lands on its feet</h1>
+          <p class="hero-text">
+            A playful environment check with cat facts, modern Python concepts
+            and a number-system converter
+          </p>
+          <div class="hero-actions">
+            <a class="primary-action" href="#cat-facts">Enter the lab</a>
+          </div>
+        </div>
+        <figure class="hero-visual">
+          <div class="photo-frame">
+            <img
+              src="https://images.unsplash.com/photo-1495360010541-f48722b34f7d?auto=format&fit=crop&w=1200&q=86"
+              alt="Curious tabby cat looking at the camera"
+            />
+          </div>
+          <div class="floating-card">
+            <span>Current mood</span>
+            <strong>Debugging with whiskers</strong>
+          </div>
+        </figure>
+      </header>
+
+      <section class="environment-section" aria-labelledby="environment-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Environment scan</p>
+            <h2 id="environment-title">Current Python runtime</h2>
+          </div>
+          <span class="status-pill">Read from the running process</span>
+        </div>
+        <div
+          class="environment-grid"
+          id="environment-grid"
+          aria-live="polite"
+        ></div>
+      </section>
+
+      <section
+        class="facts-section"
+        id="cat-facts"
+        aria-labelledby="facts-title"
+      >
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Immutable tuple · dictionaries · generator</p>
+            <h2 id="facts-title">Explore the fact collection</h2>
+          </div>
+        </div>
+        <p class="fact-filter-help">
+          Enter a word or choose a category, then select Filter facts. The
+          matching cards below update without reloading the page
+        </p>
+        <div
+          class="fact-controls"
+          id="fact-filters"
+          role="group"
+          aria-label="Cat fact filters"
+        >
+          <label class="fact-control-field">
+            Search text
+            <input
+              id="fact-keyword"
+              name="keyword"
+              type="search"
+              placeholder="Try whiskers or hearing"
+              maxlength="40"
+              autocomplete="off"
+            />
+          </label>
+          <label class="fact-control-field">
+            Category
+            <select id="fact-category" name="category">
+              <option value="">All categories</option>
+              <option value="anatomy">Anatomy</option>
+              <option value="behavior">Behavior</option>
+            </select>
+          </label>
+          <label class="sort-control">
+            <input id="fact-sort" name="sort" type="checkbox" />
+            Sort titles A–Z
+          </label>
+          <button class="primary-action" id="apply-filters" type="button">
+            Filter facts
+          </button>
+          <button class="secondary-action" id="clear-filters" type="button">
+            Clear
+          </button>
+        </div>
+        <p class="fact-summary" id="fact-summary" aria-live="polite"></p>
+        <div class="facts-grid" id="facts-grid"></div>
+      </section>
+
+      <section class="concepts-section" aria-labelledby="concepts-title">
+        <div class="section-heading compact">
+          <div>
+            <p class="eyebrow">Language toolkit</p>
+            <h2 id="concepts-title">Six concepts in motion</h2>
+          </div>
+        </div>
+        <div class="concepts-grid" id="concepts-grid"></div>
+      </section>
+
+      <section class="converter-section" aria-labelledby="converter-title">
+        <div class="converter-copy">
+          <p class="eyebrow">Interactive practice</p>
+          <h2 id="converter-title">Convert values between number systems</h2>
+          <p>
+            Convert values between binary, decimal and hexadecimal. Invalid
+            digits are rejected by the API with a clear message
+          </p>
+        </div>
+        <form class="converter-card" id="converter-form">
+          <label>
+            Number
+            <input
+              id="number-value"
+              name="value"
+              value="255"
+              maxlength="64"
+              required
+            />
+          </label>
+          <div class="base-row">
+            <label>
+              From
+              <select id="from-base" name="fromBase">
+                <option value="2">Binary</option>
+                <option value="10" selected>Decimal</option>
+                <option value="16">Hexadecimal</option>
+              </select>
+            </label>
+            <button
+              class="swap-button"
+              id="swap-bases"
+              type="button"
+              aria-label="Swap number systems"
+            >
+              ⇄
+            </button>
+            <label>
+              To
+              <select id="to-base" name="toBase">
+                <option value="2">Binary</option>
+                <option value="10">Decimal</option>
+                <option value="16" selected>Hexadecimal</option>
+              </select>
+            </label>
+          </div>
+          <button class="primary-action full-width" type="submit">
+            Convert number
+          </button>
+          <output
+            class="conversion-result"
+            id="conversion-result"
+            aria-live="polite"
+          >
+            <span>Result</span>
+            <strong>FF</strong>
+          </output>
+        </form>
+      </section>
+    </main>
+    <script src="/static/js/app.js?v=3" defer></script>
+  </body>
+</html>

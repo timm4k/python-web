@@ -1,0 +1,468 @@
+.shop-lab-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(360px, 0.6fr);
+  align-items: center;
+  min-height: 610px;
+  padding: clamp(36px, 6vw, 84px);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 42px;
+  background:
+    radial-gradient(
+      circle at 75% 35%,
+      rgba(114, 215, 255, 0.13),
+      transparent 27%
+    ),
+    radial-gradient(
+      circle at 28% 15%,
+      rgba(155, 109, 255, 0.21),
+      transparent 35%
+    ),
+    #120c1b;
+  box-shadow: var(--shadow);
+}
+
+.shop-lab-hero h1 {
+  max-width: 900px;
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(3.8rem, 7vw, 7.6rem);
+  font-weight: 500;
+  letter-spacing: -0.07em;
+  line-height: 0.87;
+}
+
+.hero-copy {
+  max-width: 650px;
+  margin: 30px 0 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.package-orbit {
+  width: min(390px, 100%);
+  aspect-ratio: 1;
+  margin-left: auto;
+  position: relative;
+  border: 1px solid rgba(187, 154, 255, 0.18);
+  border-radius: 50%;
+}
+
+.package-orbit::before {
+  content: "";
+  position: absolute;
+  inset: 18%;
+  border: 1px dashed rgba(114, 215, 255, 0.24);
+  border-radius: 50%;
+}
+
+.orbit-core,
+.orbit-node {
+  display: grid;
+  place-items: center;
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(33, 23, 47, 0.88);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+}
+
+.orbit-core {
+  width: 128px;
+  height: 128px;
+  top: 50%;
+  left: 50%;
+  border-radius: 36px;
+  transform: translate(-50%, -50%) rotate(4deg);
+  color: var(--violet-bright);
+  font-size: 1.15rem;
+  font-weight: 900;
+}
+
+.orbit-node {
+  min-width: 96px;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 14px;
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.node-one {
+  top: 6%;
+  left: 36%;
+}
+.node-two {
+  right: -2%;
+  bottom: 25%;
+}
+.node-three {
+  left: -5%;
+  bottom: 22%;
+}
+
+.lab-section {
+  margin-top: 104px;
+}
+
+.card-index {
+  color: var(--violet-bright);
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.task-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.task-card,
+.lab-card,
+.product-card {
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.task-card {
+  min-height: 210px;
+  padding: 24px;
+  border-radius: 24px;
+}
+
+.task-number {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: rgba(155, 109, 255, 0.12);
+  color: var(--violet-bright);
+  font-weight: 900;
+}
+
+.task-card h3,
+.lab-card h3,
+.order-panel h3 {
+  margin: 22px 0 9px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.45rem;
+  font-weight: 500;
+}
+
+.task-card p,
+.lab-card p,
+.order-panel p,
+.simulator-copy > p:last-of-type {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.task-card code {
+  display: block;
+  margin-top: 18px;
+  overflow-wrap: anywhere;
+  color: var(--blue);
+  font-size: 0.7rem;
+}
+
+.playground-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 18px;
+}
+
+.lab-card {
+  min-height: 340px;
+  padding: 30px;
+  border-radius: 28px;
+}
+
+.lab-card label,
+.order-controls label {
+  display: grid;
+  gap: 9px;
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.lab-card input,
+.order-controls input,
+.order-controls select {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 15px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  outline: none;
+  background-color: var(--surface-soft);
+  color: var(--ink);
+}
+
+.order-controls select {
+  padding-right: 42px;
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--violet-bright) 50%),
+    linear-gradient(135deg, var(--violet-bright) 50%, transparent 50%);
+  background-position:
+    calc(100% - 19px) 23px,
+    calc(100% - 13px) 23px;
+  background-repeat: no-repeat;
+  background-size:
+    6px 6px,
+    6px 6px;
+}
+
+.lab-card input:focus,
+.order-controls input:focus,
+.order-controls select:focus {
+  border-color: var(--violet);
+  box-shadow: 0 0 0 4px rgba(155, 109, 255, 0.12);
+}
+
+.vat-card .primary-action {
+  margin-top: 16px;
+}
+
+.result-panel,
+.order-result {
+  display: block;
+  min-height: 58px;
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.045);
+  color: var(--violet-bright);
+  line-height: 1.55;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.product-card {
+  padding: 24px;
+  border-radius: 22px;
+}
+
+.product-card strong {
+  display: block;
+  margin-bottom: 12px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.35rem;
+  font-weight: 500;
+}
+
+.product-card span {
+  color: var(--violet-bright);
+}
+
+.order-panel {
+  display: grid;
+  grid-template-columns: minmax(250px, 0.75fr) minmax(420px, 1fr);
+  gap: 30px;
+  margin-top: 18px;
+  padding: 30px;
+  border: 1px solid var(--line);
+  border-radius: 26px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.order-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  align-items: end;
+  gap: 12px;
+}
+
+.order-result {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+.simulator-section {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.65fr) minmax(0, 1fr);
+  gap: clamp(30px, 6vw, 90px);
+  margin-bottom: 150px;
+  padding: clamp(32px, 5vw, 70px);
+  border: 1px solid var(--line);
+  border-radius: 34px;
+  background: linear-gradient(
+    140deg,
+    rgba(155, 109, 255, 0.12),
+    rgba(114, 215, 255, 0.04)
+  );
+}
+
+.simulator-copy h2 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.5rem, 4vw, 4.7rem);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.96;
+}
+
+.orders-list {
+  display: grid;
+  gap: 9px;
+}
+
+.simulation-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.manifest-panel {
+  display: grid;
+  gap: 16px;
+}
+
+.simulation-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.simulation-summary > div {
+  display: grid;
+  gap: 6px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: rgba(12, 8, 18, 0.58);
+}
+
+.simulation-summary span {
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.simulation-summary strong {
+  color: var(--violet-bright);
+}
+
+.order-item {
+  display: grid;
+  grid-template-columns: 44px 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(12, 8, 18, 0.58);
+}
+
+.order-item b {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  background: rgba(155, 109, 255, 0.12);
+  color: var(--violet-bright);
+}
+
+.order-meta {
+  display: grid;
+  gap: 3px;
+}
+.order-meta small,
+.placeholder-copy {
+  color: var(--muted);
+}
+.order-price {
+  color: var(--lime);
+  font-weight: 800;
+}
+
+@media (max-width: 980px) {
+  .shop-lab-hero,
+  .simulator-section,
+  .order-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .package-orbit {
+    margin: 40px auto 0;
+  }
+  .task-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .order-controls {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .shell {
+    width: min(100% - 24px, 1400px);
+  }
+  .navigation {
+    min-height: 74px;
+  }
+  .nav-links {
+    gap: 12px;
+  }
+  .api-link {
+    font-size: 0.76rem;
+  }
+  .shop-lab-hero {
+    min-height: 0;
+    padding: 44px 24px;
+    border-radius: 28px;
+  }
+  .shop-lab-hero h1 {
+    font-size: clamp(3.4rem, 18vw, 5.2rem);
+  }
+  .package-orbit {
+    width: 290px;
+  }
+  .lab-section {
+    margin-top: 72px;
+  }
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .task-grid,
+  .playground-grid,
+  .product-grid,
+  .order-controls {
+    grid-template-columns: 1fr;
+  }
+  .order-panel {
+    padding: 22px;
+  }
+  .simulator-section {
+    margin-bottom: 100px;
+    padding: 30px 22px;
+  }
+  .order-item {
+    grid-template-columns: 40px 1fr;
+  }
+  .order-price {
+    grid-column: 2;
+  }
+  .simulation-summary {
+    grid-template-columns: 1fr;
+  }
+  .nav-primary {
+    gap: 18px;
+  }
+  .section-link {
+    font-size: 0.7rem;
+  }
+}

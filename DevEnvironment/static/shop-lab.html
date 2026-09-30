@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Interactive Python modules and packages lab"
+    />
+    <title>Modules and Packages · Purrfect Python Lab</title>
+    <link rel="stylesheet" href="/static/css/foundation.css?v=6" />
+    <link rel="stylesheet" href="/static/css/shop-lab.css?v=6" />
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <main class="shell">
+      <nav class="navigation">
+        <div class="nav-primary">
+          <a class="brand" href="/" aria-label="Purrfect Python Lab home">
+            <span class="brand-mark">PY</span>
+            <span>Purrfect Python Lab</span>
+          </a>
+          <a class="section-link active" href="/shop-lab">Modules &amp; Shop</a>
+        </div>
+        <div class="nav-links">
+          <a class="api-link" href="/docs">Explore API <span>↗</span></a>
+        </div>
+      </nav>
+
+      <header class="shop-lab-hero">
+        <div>
+          <p class="eyebrow">Modules · packages · isolated environments</p>
+          <h1>Build code that knows where it belongs</h1>
+          <p class="hero-copy">
+            Explore imports, package boundaries and a reusable cat shop through
+            live Python endpoints
+          </p>
+        </div>
+        <div class="package-orbit" aria-hidden="true">
+          <span class="orbit-core">shop</span>
+          <span class="orbit-node node-one">catalog</span>
+          <span class="orbit-node node-two">orders</span>
+          <span class="orbit-node node-three">customers</span>
+        </div>
+      </header>
+
+      <section class="lab-section" aria-labelledby="tasks-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Package roadmap</p>
+            <h2 id="tasks-title">Nine connected exercises</h2>
+          </div>
+        </div>
+        <div class="task-grid" id="task-grid" aria-live="polite"></div>
+      </section>
+
+      <section
+        class="lab-section module-playground"
+        aria-labelledby="module-title"
+      >
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Custom module</p>
+            <h2 id="module-title">Calculate VAT through reusable utilities</h2>
+          </div>
+        </div>
+        <div class="playground-grid">
+          <article class="lab-card vat-card">
+            <span class="card-index">utilities.py</span>
+            <h3>VAT calculator</h3>
+            <p>
+              Uses the shared VAT constant, calculation function and currency
+              formatter
+            </p>
+            <label>
+              Product price
+              <input
+                id="vat-price"
+                type="number"
+                value="125.50"
+                min="0"
+                max="1000000"
+                step="0.01"
+              />
+            </label>
+            <button
+              class="primary-action full-width"
+              id="calculate-vat"
+              type="button"
+            >
+              Calculate VAT
+            </button>
+            <output
+              class="result-panel"
+              id="vat-result"
+              aria-live="polite"
+            ></output>
+          </article>
+        </div>
+      </section>
+
+      <section class="lab-section" aria-labelledby="shop-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Package facade</p>
+            <h2 id="shop-title">Cat shop package</h2>
+          </div>
+        </div>
+        <div class="product-grid" id="product-grid"></div>
+        <div class="order-panel">
+          <div>
+            <span class="card-index">Relative import in action</span>
+            <h3>Create an order through the package</h3>
+            <p>
+              The UI calls the facade while order processing reaches the catalog
+              through a relative import
+            </p>
+          </div>
+          <div class="order-controls">
+            <label>
+              Customer name
+              <input id="customer-name" value="Tate" maxlength="60" />
+            </label>
+            <label>
+              Product
+              <select id="product-select"></select>
+            </label>
+            <button class="primary-action" id="create-order" type="button">
+              Create order
+            </button>
+          </div>
+          <output
+            class="order-result"
+            id="order-result"
+            aria-live="polite"
+          ></output>
+        </div>
+      </section>
+
+      <section
+        class="lab-section simulator-section"
+        aria-labelledby="simulator-title"
+      >
+        <div class="simulator-copy">
+          <p class="eyebrow">JSON order pipeline</p>
+          <h2 id="simulator-title">Build a shop manifest</h2>
+          <p>
+            Run a five-order simulation, inspect its totals and export the exact
+            structured data generated by Python
+          </p>
+          <div class="simulation-actions">
+            <button class="primary-action" id="simulate-orders" type="button">
+              Run simulation
+            </button>
+            <button
+              class="secondary-action"
+              id="download-orders"
+              type="button"
+              hidden
+            >
+              Download JSON
+            </button>
+          </div>
+        </div>
+        <div class="manifest-panel">
+          <div class="simulation-summary" id="simulation-summary" hidden>
+            <div><span>Orders</span><strong id="orders-created">0</strong></div>
+            <div>
+              <span>Manifest value</span
+              ><strong id="manifest-value">0.00 UAH</strong>
+            </div>
+          </div>
+          <div class="orders-list" id="orders-list" aria-live="polite">
+            <p class="placeholder-copy">
+              The generated manifest will appear here
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="/static/js/shop-lab.js?v=6" defer></script>
+  </body>
+</html>
