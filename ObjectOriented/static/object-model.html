@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Interactive Python object model laboratory with a perfume atelier theme"
+    />
+    <title>Object studio</title>
+    <link rel="stylesheet" href="/static/css/base.css?v=4" />
+    <link rel="stylesheet" href="/static/css/components.css?v=6" />
+    <link rel="stylesheet" href="/static/css/responsive.css?v=4" />
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <main class="shell">
+      <nav class="navigation">
+        <div class="nav-primary">
+          <a class="brand" href="/" aria-label="Perfume Object Laboratory home">
+            <span class="brand-mark">PO</span>
+            <span>Perfume Object Laboratory</span>
+          </a>
+          <a class="section-link active" href="/">Object Studio</a>
+          <a class="section-link" href="/contracts">Contracts Gallery</a>
+        </div>
+        <div class="nav-links">
+          <a class="api-link" href="/docs">Explore API ↗</a>
+        </div>
+      </nav>
+
+      <header class="hero object-hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Classes · objects · encapsulation</p>
+          <h1>Every scent begins as an object</h1>
+          <p>
+            Enter a digital perfume atelier where state, identity, memory and
+            validation become visible through Python
+          </p>
+        </div>
+        <div class="object-diagram" aria-hidden="true">
+          <div class="object-chip object-chip-main">
+            <span>instance</span><strong>Product</strong>
+          </div>
+          <div class="object-chip object-chip-price">
+            <span>property</span><strong>price</strong>
+          </div>
+          <div class="object-chip object-chip-store">
+            <span>protected state</span><strong>_price</strong>
+          </div>
+        </div>
+      </header>
+
+      <section class="lab-section" aria-labelledby="concept-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Object anatomy</p>
+            <h2 id="concept-title">Nine mechanisms inside the model</h2>
+            <p class="section-guide">
+              Select any card to open its purpose, demonstration, meaning and
+              standalone command
+            </p>
+          </div>
+        </div>
+        <div class="concept-grid" id="concept-grid" aria-live="polite"></div>
+      </section>
+
+      <section
+        class="lab-section interactive-panel"
+        aria-labelledby="property-title"
+      >
+        <div class="panel-copy">
+          <p class="eyebrow">Property validation</p>
+          <h2 id="property-title">
+            Protect the price without changing the interface
+          </h2>
+          <p>
+            Try a valid number, a negative number or text. A rejected value
+            leaves the original object unchanged
+          </p>
+          <div class="explanation-list">
+            <div>
+              <strong>What happens</strong>
+              <span>Assigning product.price does not write directly to memory; Python routes the value through @price.setter</span>
+            </div>
+            <div>
+              <strong>What the result means</strong>
+              <span>Accepted updates protected _price, while rejected reports the failed rule and preserves the previous state</span>
+            </div>
+            <div>
+              <strong>Why it is useful</strong>
+              <span>Validation stays inside the class, so every caller uses the same safe rules through a simple attribute</span>
+            </div>
+          </div>
+        </div>
+        <form class="interactive-card" id="price-form">
+          <h3>Attempt a price update</h3>
+          <div class="process-flow" aria-label="Property setter flow">
+            <div><span>1</span><strong>Assignment</strong><small>product.price = value</small></div>
+            <b>→</b>
+            <div><span>2</span><strong>Setter</strong><small>validates type and range</small></div>
+            <b>→</b>
+            <div><span>3</span><strong>State</strong><small>updates _price or keeps it unchanged</small></div>
+          </div>
+          <label class="field">
+            Perfume name
+            <input id="product-name" maxlength="80" readonly />
+          </label>
+          <label class="field">
+            Current price in UAH
+            <input id="current-price" readonly />
+          </label>
+          <label class="field">
+            New value
+            <input id="new-price" autocomplete="off" required />
+          </label>
+          <div class="scenario-buttons" aria-label="Price validation examples">
+            <button type="button" data-price-example="2400">
+              Valid number
+            </button>
+            <button type="button" data-price-example="-100">
+              Negative number
+            </button>
+            <button type="button" data-price-example="unavailable">
+              Text value
+            </button>
+          </div>
+          <button class="primary-action" type="submit">Try update</button>
+          <output class="result-panel" id="price-result" aria-live="polite"
+            >Choose an example or enter your own value</output
+          >
+        </form>
+      </section>
+
+      <section
+        class="lab-section interactive-panel final-section"
+        aria-labelledby="memory-title"
+      >
+        <div class="panel-copy">
+          <p class="eyebrow">Measured memory</p>
+          <h2 id="memory-title">Compare flexible and slotted objects</h2>
+          <p>
+            Both classes store the same x, y and z values. The regular class
+            creates a dictionary for every object, while __slots__ reserves only
+            three fields
+          </p>
+          <div class="explanation-list">
+            <div>
+              <strong>What is compared</strong>
+              <span>The server creates the same selected number of RegularPoint and SlottedPoint objects with identical values</span>
+            </div>
+            <div>
+              <strong>What the numbers mean</strong>
+              <span>Regular and Slotted show measured peak memory; Saved shows the percentage avoided by the slotted collection</span>
+            </div>
+            <div>
+              <strong>Why it is useful</strong>
+              <span>__slots__ trades dynamic attributes for a smaller object footprint when many similar instances are stored</span>
+            </div>
+          </div>
+        </div>
+        <div class="interactive-card">
+          <h3>Allocation experiment</h3>
+          <div class="process-flow" aria-label="Memory measurement flow">
+            <div><span>1</span><strong>Create</strong><small>two equal collections</small></div>
+            <b>→</b>
+            <div><span>2</span><strong>Measure</strong><small>tracemalloc records each peak</small></div>
+            <b>→</b>
+            <div><span>3</span><strong>Compare</strong><small>calculate saved memory</small></div>
+          </div>
+          <div class="comparison-explainer">
+            <div>
+              <strong>RegularPoint</strong>
+              <code>self.__dict__</code>
+              <span>Flexible attributes, but every object owns an extra dictionary</span>
+            </div>
+            <div>
+              <strong>SlottedPoint</strong>
+              <code>__slots__ = ("x", "y", "z")</code>
+              <span>Only declared fields are stored, so each object needs less memory</span>
+            </div>
+          </div>
+          <label class="field">
+            Objects to create
+            <input id="object-count" type="range" step="100" />
+            <strong class="range-value" id="object-count-value"></strong>
+          </label>
+          <button class="primary-action" id="measure-memory" type="button">
+            Measure memory
+          </button>
+          <div class="metrics-grid" id="memory-results" hidden>
+            <div class="metric-card">
+              <span>Regular</span><strong id="regular-memory">0 MB</strong>
+            </div>
+            <div class="metric-card">
+              <span>Slotted</span><strong id="slotted-memory">0 MB</strong>
+            </div>
+            <div class="metric-card">
+              <span>Saved</span><strong id="saved-memory">0%</strong>
+            </div>
+          </div>
+          <div class="memory-bars" id="memory-bars" hidden>
+            <div><span>Regular object</span><i id="regular-bar"></i></div>
+            <div><span>Slotted object</span><i id="slotted-bar"></i></div>
+          </div>
+          <output class="result-panel" id="memory-status" aria-live="polite"
+            >Ready to allocate</output
+          >
+          <p class="meaning-note">
+            Why this matters: saving a small amount per object becomes useful
+            when an application keeps thousands or millions of similar objects
+          </p>
+        </div>
+      </section>
+    </main>
+    <script src="/static/js/shared.js?v=5"></script>
+    <script src="/static/js/object-model.js?v=4" defer></script>
+  </body>
+</html>

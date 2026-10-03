@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Interactive Python inheritance, ABC and Protocol laboratory"
+    />
+    <title>Contracts Gallery · Perfume Object Laboratory</title>
+    <link rel="stylesheet" href="/static/css/base.css?v=4" />
+    <link rel="stylesheet" href="/static/css/components.css?v=6" />
+    <link rel="stylesheet" href="/static/css/responsive.css?v=4" />
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <main class="shell">
+      <nav class="navigation">
+        <div class="nav-primary">
+          <a class="brand" href="/" aria-label="Perfume Object Laboratory home">
+            <span class="brand-mark">PO</span>
+            <span>Perfume Object Laboratory</span>
+          </a>
+          <a class="section-link" href="/">Object Studio</a>
+          <a class="section-link active" href="/contracts">Contracts Gallery</a>
+        </div>
+        <div class="nav-links">
+          <a class="api-link" href="/docs">Explore API ↗</a>
+        </div>
+      </nav>
+
+      <header class="hero contracts-hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Inheritance · MRO · ABC · Protocol</p>
+          <h1>A formula with many layers</h1>
+          <p>
+            Trace inheritance, cooperative method resolution and interchangeable
+            contracts through a working fragrance system
+          </p>
+        </div>
+        <div class="contract-map" aria-hidden="true">
+          <span class="contract-node contract-core">Formula</span>
+          <span class="contract-node contract-abc">ABC</span>
+          <span class="contract-node contract-protocol">Protocol</span>
+          <span class="contract-node contract-plugin">Plugin</span>
+        </div>
+      </header>
+
+      <section class="lab-section" aria-labelledby="contract-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Architecture map</p>
+            <h2 id="contract-title">Nine ways objects collaborate</h2>
+            <p class="section-guide">
+              Select any card to see what the mechanism runs, why it exists and
+              how to launch its file separately
+            </p>
+          </div>
+        </div>
+        <div class="concept-grid" id="concept-grid" aria-live="polite"></div>
+      </section>
+
+      <section
+        class="lab-section interactive-panel"
+        aria-labelledby="mro-title"
+      >
+        <div class="panel-copy">
+          <p class="eyebrow">Method resolution order</p>
+          <h2 id="mro-title">Follow the next class, not the parent</h2>
+          <p>
+            The graph comes directly from each class __mro__ and shows how
+            cooperative super moves through the chain
+          </p>
+          <div class="explanation-list">
+            <div>
+              <strong>What happens</strong>
+              <span>Python reads the selected class __mro__ and builds the exact order used to search for methods</span>
+            </div>
+            <div>
+              <strong>What the arrows mean</strong>
+              <span>Each arrow points to the next class Python will inspect; super() continues from that next position</span>
+            </div>
+            <div>
+              <strong>Why it is useful</strong>
+              <span>MRO makes multiple inheritance predictable and prevents the shared base class from running twice</span>
+            </div>
+          </div>
+        </div>
+        <div class="interactive-card">
+          <h3>Choose a hierarchy to trace</h3>
+          <div class="process-flow" aria-label="MRO lookup flow">
+            <div><span>1</span><strong>Class</strong><small>choose the starting type</small></div>
+            <b>→</b>
+            <div><span>2</span><strong>__mro__</strong><small>Python provides lookup order</small></div>
+            <b>→</b>
+            <div><span>3</span><strong>super()</strong><small>calls the next type in that order</small></div>
+          </div>
+          <label class="field">
+            Hierarchy
+            <select id="mro-type">
+              <option value="diamond">Diamond inheritance</option>
+              <option value="vehicles">Vehicle inheritance</option>
+            </select>
+          </label>
+          <button class="primary-action" id="trace-mro" type="button">
+            Trace method lookup
+          </button>
+          <div class="mro-track" id="mro-track"></div>
+          <output class="result-panel" id="greeting-result"
+            >Select a hierarchy and trace it</output
+          >
+        </div>
+      </section>
+
+      <section
+        class="lab-section interactive-panel"
+        aria-labelledby="polymorphism-title"
+      >
+        <div class="panel-copy">
+          <p class="eyebrow">Runtime polymorphism</p>
+          <h2 id="polymorphism-title">
+            Call the same method on a different type
+          </h2>
+          <p>
+            The interface stays start_engine, but Python selects the
+            implementation from the runtime class
+          </p>
+          <div class="explanation-list">
+            <div>
+              <strong>What stays the same</strong>
+              <span>Every object receives the identical start_engine() method call</span>
+            </div>
+            <div>
+              <strong>What changes</strong>
+              <span>Vehicle, Car and ElectricCar provide different implementations of that method</span>
+            </div>
+            <div>
+              <strong>Why it is useful</strong>
+              <span>Calling code can work with a common Vehicle interface without checking every concrete type</span>
+            </div>
+          </div>
+        </div>
+        <div class="interactive-card">
+          <h3>Engine simulator</h3>
+          <div class="process-flow" aria-label="Polymorphism flow">
+            <div><span>1</span><strong>Same call</strong><small>start_engine()</small></div>
+            <b>→</b>
+            <div><span>2</span><strong>Runtime type</strong><small>Vehicle, Car or ElectricCar</small></div>
+            <b>→</b>
+            <div><span>3</span><strong>Override</strong><small>selects matching behavior</small></div>
+          </div>
+          <label class="field">
+            Runtime type
+            <select id="vehicle-type"></select>
+          </label>
+          <button class="primary-action" id="start-engine" type="button">
+            Start selected engine
+          </button>
+          <output class="result-panel" id="engine-result"
+            >Choose a type to see its implementation</output
+          >
+        </div>
+      </section>
+
+      <section
+        class="lab-section interactive-panel final-section"
+        aria-labelledby="export-title"
+      >
+        <div class="panel-copy">
+          <p class="eyebrow">Dynamic plugin registry</p>
+          <h2 id="export-title">Export one formula through any contract</h2>
+          <p>
+            Exporter subclasses are discovered automatically and selected by
+            their declared format name
+          </p>
+          <div class="explanation-list">
+            <div>
+              <strong>What happens</strong>
+              <span>The registry finds every imported BaseExporter subclass and compares its format name</span>
+            </div>
+            <div>
+              <strong>What the result means</strong>
+              <span>The same perfume dictionary is converted by JSONExporter, CSVExporter or YAMLExporter</span>
+            </div>
+            <div>
+              <strong>Why it is useful</strong>
+              <span>A new format is added as another plugin class without rewriting the selection function</span>
+            </div>
+          </div>
+        </div>
+        <form class="interactive-card" id="export-form">
+          <h3>Fragrance data exporter</h3>
+          <div class="process-flow" aria-label="Plugin export flow">
+            <div><span>1</span><strong>Discover</strong><small>find exporter subclasses</small></div>
+            <b>→</b>
+            <div><span>2</span><strong>Select</strong><small>match the requested format</small></div>
+            <b>→</b>
+            <div><span>3</span><strong>Export</strong><small>run the plugin contract</small></div>
+          </div>
+          <label class="field">
+            Perfume name
+            <input id="export-name" maxlength="80" required />
+          </label>
+          <label class="field">
+            Fragrance family
+            <input id="export-family" maxlength="80" required />
+          </label>
+          <label class="field">
+            Price in UAH
+            <input
+              id="export-price"
+              type="number"
+              min="0"
+              step="0.01"
+              required
+            />
+          </label>
+          <label class="field">
+            Export format
+            <select id="export-format"></select>
+          </label>
+          <button class="primary-action" type="submit">Export formula</button>
+          <output class="result-panel" id="export-result" aria-live="polite"
+            >Choose a format and export</output
+          >
+        </form>
+      </section>
+    </main>
+    <script src="/static/js/shared.js?v=5"></script>
+    <script src="/static/js/contracts.js?v=4" defer></script>
+  </body>
+</html>
