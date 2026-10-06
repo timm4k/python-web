@@ -1,0 +1,81 @@
+@media (max-width: 1250px) {
+  .decorator-layout {
+    gap: 44px;
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 1050px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+  .projector {
+    margin: 150px auto 20px;
+  }
+  .guide-card {
+    flex-basis: calc(50% - 6px);
+  }
+  .split-labs {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  nav {
+    display: none;
+  }
+  .hero {
+    min-height: auto;
+    padding-top: 70px;
+  }
+  .projector {
+    transform: scale(0.75) rotate(-3deg);
+    transform-origin: center;
+  }
+  .guide-section,
+  .lab-section {
+    padding-block: 65px;
+  }
+  .section-heading {
+    align-items: start;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .experiment,
+  .lifecycle-grid {
+    grid-template-columns: 1fr;
+  }
+  .guide-card {
+    flex-basis: 100%;
+    min-width: 0;
+  }
+  .explanation {
+    border-bottom: 1px solid var(--line);
+    border-right: 0;
+  }
+  .output-stage {
+    grid-template-columns: 1fr;
+  }
+  .result-card.wide {
+    grid-column: auto;
+  }
+  .field-row,
+  .dispatch,
+  .retry-guide {
+    grid-template-columns: 1fr;
+  }
+  .dispatch-arrow {
+    transform: rotate(90deg);
+  }
+  .wrapper {
+    gap: 8px;
+    grid-template-columns: 48px 1fr;
+  }
+  .wrapper small {
+    grid-column: 1 / -1;
+  }
+  .wrapper.middle,
+  .wrapper.core {
+    margin-inline: 0;
+  }
+}

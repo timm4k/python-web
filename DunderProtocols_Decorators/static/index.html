@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Python Protocol Explorer</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/static/css/base.css" />
+    <link rel="stylesheet" href="/static/css/components.css" />
+    <link rel="stylesheet" href="/static/css/responsive.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#top"
+        ><span class="brand-mark">PY</span>Frame by Frame</a
+      >
+      <nav aria-label="Page sections">
+        <a href="#protocols">Dunder protocols</a>
+        <a href="#decorators">Decorators</a>
+        <a href="#lifecycle">Lifecycle</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">
+            Python object model · interactive cinema archive
+          </p>
+          <h1>See what Python calls<br /><em>behind the syntax</em></h1>
+          <p class="hero-text">
+            Built-in operations are not magic. Pick an experiment and follow the
+            request from familiar Python syntax to the dunder method that
+            answers it
+          </p>
+          <a class="primary-link" href="#protocols"
+            >Enter the projection room <span>→</span></a
+          >
+        </div>
+        <div class="projector" aria-hidden="true">
+          <div class="reel reel-left"><i></i><i></i><i></i></div>
+          <div class="reel reel-right"><i></i><i></i><i></i></div>
+          <div class="lens"></div>
+          <div class="beam"></div>
+        </div>
+      </section>
+
+      <section class="guide-section" aria-labelledby="guide-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Five responsibilities</p>
+            <h2 id="guide-heading">A map of the implementation</h2>
+          </div>
+          <p>
+            Open any card to see what the file demonstrates and why the
+            mechanism matters
+          </p>
+        </div>
+        <div id="guide-grid" class="guide-grid" aria-live="polite"></div>
+      </section>
+
+      <section id="protocols" class="lab-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Representation · comparison · hashing</p>
+            <h2>A movie with several Python identities</h2>
+          </div>
+          <p>
+            The same Movie answers differently depending on whether a developer,
+            a user, a sorter, a set or a dictionary asks
+          </p>
+        </div>
+        <div class="experiment movie-experiment">
+          <div class="explanation">
+            <span class="step-number">01</span>
+            <h3>Inspect the complete protocol</h3>
+            <p>
+              The experiment creates one deliberate duplicate with the same
+              title and year. Equality and hashing collapse it in a set even
+              though its other fields differ
+            </p>
+            <button id="inspect-movie" class="action-button" type="button">
+              Run movie protocol
+            </button>
+          </div>
+          <div id="movie-output" class="output-stage empty">
+            <p>Run the experiment to reveal each protocol result</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="lab-section split-labs">
+        <div class="lab-card">
+          <p class="eyebrow">Container emulation</p>
+          <h2>Translate syntax into methods</h2>
+          <p class="supporting">
+            Choose an operation. Python routes it to the matching method on
+            MovieCollection
+          </p>
+          <div class="control-group">
+            <label for="collection-operation">Python operation</label>
+            <select id="collection-operation">
+              <option value="length">len(collection)</option>
+              <option value="truth">bool(collection)</option>
+              <option value="index">collection[0]</option>
+              <option value="contains">'Inception' in collection</option>
+              <option value="iterate">for movie in collection</option>
+              <option value="merge">first + second</option>
+              <option value="top">collection.top_rated(3)</option>
+            </select>
+          </div>
+          <button id="run-collection" class="action-button" type="button">
+            Trace operation
+          </button>
+          <div id="collection-output" class="trace-output empty">
+            Choose an operation to see the dispatch path
+          </div>
+        </div>
+
+        <div class="lab-card">
+          <p class="eyebrow">Alternative constructors</p>
+          <h2>Build the right runtime type</h2>
+          <p class="supporting">
+            A classmethod receives <code>cls</code>, so the inherited factory
+            can construct PremiumMovie without duplicating parsing logic
+          </p>
+          <div class="field-row">
+            <div class="control-group">
+              <label for="factory-source">Input format</label
+              ><select id="factory-source">
+                <option value="csv">CSV line</option>
+                <option value="dictionary">Dictionary fields</option>
+              </select>
+            </div>
+            <label class="check-control"
+              ><input id="factory-premium" type="checkbox" /><span
+                >Construct PremiumMovie</span
+              ></label
+            >
+          </div>
+          <div class="control-group">
+            <label for="factory-data">Movie data</label
+            ><input
+              id="factory-data"
+              value="Arrival,2016,Denis Villeneuve,Science fiction,7.9"
+            />
+          </div>
+          <button id="run-factory" class="action-button" type="button">
+            Construct object
+          </button>
+          <div id="factory-output" class="trace-output empty">
+            The runtime type and repr will appear here
+          </div>
+        </div>
+      </section>
+
+      <section id="decorators" class="lab-section decorator-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Function decorators</p>
+            <h2>Watch wrappers manage one call</h2>
+          </div>
+          <p>
+            <code>@retry</code> handles failures closest to the function.
+            <code>@timed</code> wraps that complete retry cycle, while
+            <code>@wraps</code> preserves metadata
+          </p>
+        </div>
+        <div class="decorator-layout">
+          <div class="stack-diagram" aria-label="Decorator call order">
+            <div class="wrapper outer">
+              <span>outer</span><strong>@timed</strong
+              ><small>measures the full operation</small>
+            </div>
+            <div class="wrapper middle">
+              <span>inner</span><strong>@retry</strong
+              ><small>repeats after exceptions</small>
+            </div>
+            <div class="wrapper core">
+              <span>core</span><strong>unstable_api_call()</strong
+              ><small>fails or returns a response</small>
+            </div>
+          </div>
+          <div class="decorator-controls">
+            <div class="retry-guide">
+              <div>
+                <strong>Failures before success</strong
+                ><span>How many first calls raise ConnectionError</span>
+              </div>
+              <div>
+                <strong>Maximum attempts</strong
+                ><span>How many calls @retry is allowed to make</span>
+              </div>
+              <div>
+                <strong>Result rule</strong
+                ><span
+                  >Success needs one more attempt than the selected failure
+                  count</span
+                >
+              </div>
+            </div>
+            <label for="failure-count"
+              >Failures before success
+              <output id="failure-value">2</output></label
+            >
+            <input id="failure-count" type="range" min="0" max="5" value="2" />
+            <label for="attempt-count"
+              >Maximum attempts <output id="attempt-value">3</output></label
+            >
+            <input id="attempt-count" type="range" min="1" max="6" value="3" />
+            <button id="run-retry" class="action-button" type="button">
+              Run decorated call
+            </button>
+            <div id="retry-output" class="trace-output empty">
+              Adjust both values to demonstrate success or exhausted retries
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="lifecycle" class="lab-section lifecycle-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Class decorator · context manager</p>
+            <h2>Manage identity and cleanup</h2>
+          </div>
+          <p>
+            The Singleton decorator makes every MovieCache call return one
+            object. The with block guarantees that MovieSession exits and
+            reports its summary
+          </p>
+        </div>
+        <div class="lifecycle-grid">
+          <div class="movie-picker">
+            <h3>Choose a screening program</h3>
+            <label
+              ><input
+                type="checkbox"
+                name="session-movie"
+                value="0"
+                checked
+              /><span>Inception</span></label
+            >
+            <label
+              ><input
+                type="checkbox"
+                name="session-movie"
+                value="1"
+                checked
+              /><span>The Dark Knight</span></label
+            >
+            <label
+              ><input type="checkbox" name="session-movie" value="2" /><span
+                >Interstellar</span
+              ></label
+            >
+            <label
+              ><input type="checkbox" name="session-movie" value="3" /><span
+                >The Shawshank Redemption</span
+              ></label
+            >
+            <label
+              ><input type="checkbox" name="session-movie" value="4" /><span
+                >Dune</span
+              ></label
+            >
+            <button id="run-session" class="action-button" type="button">
+              Open and close session
+            </button>
+          </div>
+          <div id="session-output" class="session-timeline empty">
+            Select movies to trace __enter__, work and __exit__
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="/static/js/app.js" defer></script>
+  </body>
+</html>
