@@ -1,0 +1,101 @@
+.validation-grid {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.7fr) 1.3fr;
+  gap: 24px;
+}
+.validation-grid .control-card {
+  padding: 0;
+  border: 0;
+  box-shadow: none;
+}
+fieldset {
+  display: grid;
+  width: 100%;
+  gap: 12px;
+  margin: 0 0 24px;
+  padding: 0;
+  border: 0;
+}
+legend {
+  margin-bottom: 16px;
+  font-weight: 800;
+}
+label {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  cursor: pointer;
+}
+input[type="radio"] {
+  accent-color: var(--blue);
+}
+.parse-pipeline {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  gap: 10px;
+  align-items: center;
+}
+.parse-pipeline div {
+  min-height: 104px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.parse-pipeline small,
+.parse-pipeline strong {
+  display: block;
+}
+.parse-pipeline small {
+  margin-bottom: 18px;
+  color: var(--coral);
+  font-weight: 800;
+}
+.json-comparison {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.json-comparison > div > span {
+  display: block;
+  margin: 0 0 8px;
+  color: var(--muted);
+  font:
+    800 0.68rem "Cascadia Code",
+    monospace;
+}
+.json-result {
+  min-height: 240px;
+  max-height: 360px;
+  margin: 0;
+  padding: 20px;
+  white-space: pre-wrap;
+  border-radius: 12px;
+  color: #e5f2ef;
+  background: var(--ink);
+  overflow: auto;
+}
+.rule-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1px;
+  margin-top: 16px;
+  border: 1px solid var(--line);
+  background: var(--line);
+}
+.rule-grid div {
+  padding: 20px;
+  background: var(--surface);
+}
+.rule-grid b,
+.rule-grid span {
+  display: block;
+}
+.rule-grid b {
+  margin-bottom: 12px;
+  color: var(--blue);
+}
+.rule-grid span {
+  color: var(--muted);
+  line-height: 1.45;
+}

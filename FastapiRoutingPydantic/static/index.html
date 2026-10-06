@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>VitaTrace Analysis Laboratory</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23172b35'/%3E%3Cpath d='M27 10h10v21l9 15a6 6 0 0 1-5 9H23a6 6 0 0 1-5-9l9-15Zm-3 34h16l-5-9h-6Z' fill='%23d84b5b'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="/static/css/base.css" />
+    <link rel="stylesheet" href="/static/css/page-layout.css" />
+    <link rel="stylesheet" href="/static/css/event-loop.css" />
+    <link rel="stylesheet" href="/static/css/concurrency.css" />
+    <link rel="stylesheet" href="/static/css/validation.css" />
+    <link rel="stylesheet" href="/static/css/benchmark.css" />
+    <link rel="stylesheet" href="/static/css/routing.css" />
+    <link rel="stylesheet" href="/static/css/responsive.css" />
+  </head>
+  <body>
+    <aside class="rail">
+      <a class="brand" href="#top" aria-label="VitaTrace laboratory home">
+        <span class="brand-mark">V+</span>
+        <span>VitaTrace<br />Analysis Lab</span>
+      </a>
+      <nav aria-label="Laboratory sections">
+        <a href="#event-loop">Assay flow</a>
+        <a href="#grouping">Task groups</a>
+        <a href="#safety">Lab safety</a>
+        <a href="#validation">Validation</a>
+        <a href="#benchmark">FastAPI</a>
+        <a href="#routes">Routing</a>
+      </nav>
+      <a class="docs-link" href="/docs">OpenAPI documentation ↗</a>
+    </aside>
+
+    <main id="top">
+      <header class="status-header">
+        <div>
+          <p class="eyebrow">Blood vitamin analysis · Python 3.12</p>
+          <h1>One specimen, several tests, no blocked laboratory</h1>
+          <p class="header-copy">
+            The laboratory is a visual model for asyncio and FastAPI: every
+            assay is a coroutine, every result is validated before it enters the
+            report
+          </p>
+        </div>
+        <div class="sample-ticket">
+          <span>SPECIMEN</span><strong>VT–2048</strong> <span>STATUS</span
+          ><strong class="ready-dot">Ready for analysis</strong>
+          <span>PANELS</span><strong>D · B12 · Ferritin</strong>
+        </div>
+      </header>
+
+      <section class="intro-grid" aria-label="Processing map">
+        <article class="intro-card primary">
+          <span class="index">01 · PRE-ANALYTICS</span>
+          <h2>Accept the sample</h2>
+          <p>
+            Pydantic checks types, constraints and nested data before the
+            application trusts the payload
+          </p>
+        </article>
+        <article class="intro-card">
+          <span class="index">02 · ANALYTICS</span>
+          <h2>Run independent assays</h2>
+          <p>
+            The event loop overlaps waiting time while Lock and Semaphore
+            protect shared laboratory resources
+          </p>
+        </article>
+        <article class="intro-card">
+          <span class="index">03 · POST-ANALYTICS</span>
+          <h2>Publish the report</h2>
+          <p>
+            FastAPI routes typed results through Body, Query, Path and Header
+            inputs with documented status codes
+          </p>
+        </article>
+      </section>
+
+      <section id="event-loop" class="lab-section">
+        <div class="section-heading">
+          <p class="eyebrow">Event loop · cooperative scheduling</p>
+          <h2>Three assays spend most of their time waiting</h2>
+          <p>
+            The required <code>cook_soup</code>, <code>cook_main_dish</code> and
+            <code>bake_dessert</code> coroutine names remain in the source code,
+            while their visible 3:5:2 workflow is presented consistently as
+            Vitamin D, ferritin and B12 analysis
+          </p>
+        </div>
+        <div class="experiment-layout">
+          <div class="timeline-card">
+            <div class="timeline-heading">
+              <strong>Sequential pipeline</strong
+              ><span>3 + 5 + 2 = 10 seconds</span>
+            </div>
+            <div class="timeline">
+              <span style="--units: 3">Vitamin D · 3s</span>
+              <span style="--units: 5">Ferritin · 5s</span>
+              <span style="--units: 2">B12 · 2s</span>
+            </div>
+            <p class="timeline-note">
+              Each analyzer starts only after the previous result returns
+            </p>
+            <div class="timeline-heading">
+              <strong>Concurrent pipeline</strong
+              ><span>max(3, 5, 2) = 5 seconds</span>
+            </div>
+            <div class="timeline concurrent">
+              <span style="--units: 3; --row: 1">Vitamin D · 3s</span>
+              <span style="--units: 5; --row: 2">Ferritin · 5s</span>
+              <span style="--units: 2; --row: 3">B12 · 2s</span>
+            </div>
+            <p class="timeline-note">
+              All analyzers start together; the slowest assay determines total
+              waiting time
+            </p>
+          </div>
+          <div class="control-card">
+            <span class="panel-tag">LIVE MEASUREMENT</span>
+            <h3>Compare both schedules</h3>
+            <p>
+              The API scales the wait down for the browser while preserving the
+              3:5:2 relationship
+            </p>
+            <button id="run-event-loop" type="button">
+              Run assay comparison
+            </button>
+            <div id="event-loop-result" class="result-panel" aria-live="polite">
+              <span class="placeholder"
+                >Run the experiment to measure both timelines</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="explanation-strip">
+          <div>
+            <b>1 · Execute</b
+            ><span
+              >The coroutine performs Python code until it reaches
+              <code>await</code></span
+            >
+          </div>
+          <div>
+            <b>2 · Suspend</b
+            ><span
+              ><code>asyncio.sleep</code> registers a timer without blocking the
+              thread</span
+            >
+          </div>
+          <div>
+            <b>3 · Schedule</b
+            ><span
+              >The event loop selects another coroutine that is ready to
+              work</span
+            >
+          </div>
+          <div>
+            <b>4 · Resume</b
+            ><span
+              >The original coroutine continues after its timer or I/O
+              completes</span
+            >
+          </div>
+        </div>
+        <aside class="meaning-note">
+          <strong>What this proves</strong
+          ><span
+            >Concurrency reduces idle waiting for I/O-bound work. It does not
+            make CPU calculations run on multiple cores</span
+          >
+        </aside>
+      </section>
+
+      <section id="grouping" class="lab-section">
+        <div class="section-heading">
+          <p class="eyebrow">asyncio.gather() · asyncio.wait() · TaskGroup</p>
+          <h2>Choose what happens when sample 3 fails</h2>
+          <p>
+            Five result downloads start together. The third raises
+            <code>ValueError</code>; the selected grouping mechanism decides
+            what the caller receives and whether unfinished siblings are
+            cancelled
+          </p>
+        </div>
+        <div class="grouping-grid">
+          <form id="grouping-form" class="strategy-list">
+            <label
+              ><input
+                type="radio"
+                name="strategy"
+                value="gather-fail-fast"
+                checked
+              /><span
+                ><b>gather(return_exceptions=False)</b
+                ><small
+                  >Propagates the first exception; other awaitables are not
+                  automatically cancelled</small
+                ></span
+              ></label
+            >
+            <label
+              ><input
+                type="radio"
+                name="strategy"
+                value="gather-collect"
+              /><span
+                ><b>gather(return_exceptions=True)</b
+                ><small
+                  >Collects successful results and exceptions in their original
+                  order</small
+                ></span
+              ></label
+            >
+            <label
+              ><input type="radio" name="strategy" value="task-group" /><span
+                ><b>TaskGroup</b
+                ><small
+                  >Cancels unfinished sibling tasks when one task fails</small
+                ></span
+              ></label
+            >
+            <button type="submit">Run selected strategy</button>
+            <p class="strategy-note">
+              <code>asyncio.wait()</code> is the lower-level alternative that
+              returns explicit <code>done</code> and <code>pending</code> task
+              sets. This project implements the <code>TaskGroup</code> option
+              allowed by the assignment
+            </p>
+          </form>
+          <div
+            class="task-rack"
+            aria-label="Five simulated sample result downloads"
+          >
+            <span>sample 1</span><span>sample 2</span
+            ><span class="failed">sample 3 · fails</span><span>sample 4</span
+            ><span>sample 5</span>
+            <div id="grouping-result" class="result-panel" aria-live="polite">
+              <span class="placeholder"
+                >Select a strategy to see its failure contract</span
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="safety" class="lab-section split-section">
+        <article class="concept-panel reagent-panel">
+          <p class="eyebrow">Race condition · asyncio.Lock</p>
+          <h2>Five analyzers share one 1000 µL reagent bottle</h2>
+          <p>
+            The assignment models a bank balance. The laboratory analogy uses
+            the same numbers: five coroutines each check whether 300 units
+            remain, then yield before subtracting
+          </p>
+          <div class="code-flow">
+            <span>read 1000</span><i>await</i><span>subtract 300</span><i>× 5</i
+            ><strong>−500</strong>
+          </div>
+          <div class="micro-explanation">
+            <b>Why the result is inconsistent</b
+            ><span
+              >Multiple coroutines read the same balance before any of them
+              updates the shared value</span
+            >
+          </div>
+          <button id="run-race" type="button">
+            Compare without and with Lock
+          </button>
+          <div id="race-result" class="result-panel compact" aria-live="polite">
+            <span class="placeholder"
+              >Run the experiment to compare both reagent volumes</span
+            >
+          </div>
+        </article>
+        <article class="concept-panel inverse">
+          <p class="eyebrow">Backpressure · Semaphore(3)</p>
+          <h2>Only three analyzer channels exist</h2>
+          <p>
+            Ten requests may be ready, but a semaphore exposes only three
+            permits. Finished requests return permits to the waiting queue
+          </p>
+          <div
+            class="gate-visual"
+            aria-label="Three available semaphore permits"
+          >
+            <span>channel 1</span><span>channel 2</span><span>channel 3</span
+            ><span class="waiting">7 samples wait outside the gate</span>
+          </div>
+          <div class="micro-explanation">
+            <b>Lock versus Semaphore</b
+            ><span
+              >A Lock allows one owner; a Semaphore represents configurable
+              capacity</span
+            >
+          </div>
+          <button id="run-semaphore" type="button">
+            Measure analyzer capacity
+          </button>
+          <div
+            id="semaphore-result"
+            class="result-panel compact"
+            aria-live="polite"
+          >
+            <span class="placeholder"
+              >Run the experiment to measure peak analyzer usage</span
+            >
+          </div>
+        </article>
+      </section>
+
+      <section id="validation" class="lab-section">
+        <div class="section-heading">
+          <p class="eyebrow">Pydantic v2 · parse, do not validate</p>
+          <h2>Reject a malformed laboratory configuration before use</h2>
+          <p>
+            Parse untrusted input into a typed domain model. A raw JSON object
+            becomes a <code>ServiceConfig</code>; secrets stay masked, addresses
+            become dedicated types and production debug is normalized to
+            <code>false</code>
+          </p>
+        </div>
+        <div class="validation-grid">
+          <form id="config-form" class="control-card scenario-card">
+            <fieldset>
+              <legend>Choose the incoming configuration</legend>
+              <label
+                ><input
+                  type="radio"
+                  name="scenario"
+                  value="valid"
+                  checked
+                /><span
+                  ><b>Valid configuration</b
+                  ><small>Every field satisfies its contract</small></span
+                ></label
+              >
+              <label
+                ><input type="radio" name="scenario" value="debug" /><span
+                  ><b>Normalized configuration</b
+                  ><small>Production debug mode is forced to false</small></span
+                ></label
+              >
+              <label
+                ><input type="radio" name="scenario" value="invalid" /><span
+                  ><b>Invalid configuration</b
+                  ><small
+                    >An invalid email and short secret produce HTTP 422</small
+                  ></span
+                ></label
+              >
+            </fieldset>
+            <button type="submit">Send through Pydantic</button>
+          </form>
+          <div class="parse-pipeline">
+            <div>
+              <small>RAW</small><strong>JSON strings and numbers</strong>
+            </div>
+            <span>→</span>
+            <div>
+              <small>PARSE</small><strong>Types, ranges, nested models</strong>
+            </div>
+            <span>→</span>
+            <div>
+              <small>TRUSTED</small><strong>ServiceConfig or HTTP 422</strong>
+            </div>
+          </div>
+          <div class="json-comparison">
+            <div>
+              <span>REQUEST BODY</span>
+              <pre id="config-input" class="json-result"></pre>
+            </div>
+            <div>
+              <span>PARSED RESPONSE</span>
+              <pre id="config-result" class="json-result" aria-live="polite">
+Run a scenario to inspect the result</pre
+              >
+            </div>
+          </div>
+        </div>
+        <div class="rule-grid">
+          <div>
+            <b>IPvAnyAddress</b
+            ><span>Parses IPv4 or IPv6 instead of trusting arbitrary text</span>
+          </div>
+          <div>
+            <b>SecretStr</b
+            ><span>Displays ********** in logs and representations</span>
+          </div>
+          <div>
+            <b>Redis URL</b
+            ><span
+              >Accepts only <code>redis://</code> or
+              <code>rediss://</code> connection schemes</span
+            >
+          </div>
+          <div>
+            <b>Field constraints</b
+            ><span>Ports, TTL, list size and string lengths are bounded</span>
+          </div>
+          <div>
+            <b>@field_validator</b
+            ><span
+              >Normalizes or validates one field independently, such as a
+              booking timestamp</span
+            >
+          </div>
+          <div>
+            <b>@model_validator</b
+            ><span
+              >Validates relationships between fields or applies a whole-model
+              rule</span
+            >
+          </div>
+        </div>
+      </section>
+
+      <section id="benchmark" class="lab-section">
+        <div class="section-heading">
+          <p class="eyebrow">FastAPI · def versus async def</p>
+          <h2>Handler syntax must match the kind of work</h2>
+          <p>
+            FastAPI moves normal <code>def</code> handlers to a thread pool. An
+            <code>async def</code> handler runs on the event-loop thread and
+            must never call blocking work
+          </p>
+        </div>
+        <div class="benchmark-table">
+          <div class="table-head">
+            <span>Endpoint</span><span>Work</span><span>Execution place</span
+            ><span>Meaning</span>
+          </div>
+          <div>
+            <code>cpu-bound-sync</code><span>fibonacci(35)</span
+            ><span>worker thread</span
+            ><span
+              >Loop remains responsive, but the GIL limits CPU parallelism</span
+            >
+          </div>
+          <div class="warning-row">
+            <code>cpu-bound-async</code><span>fibonacci(35)</span
+            ><span>event-loop thread</span
+            ><span>Antipattern: ten requests block one another</span>
+          </div>
+          <div>
+            <code>io-bound-sync</code><span>time.sleep(1)</span
+            ><span>worker thread</span
+            ><span>Blocking wait is isolated from the loop</span>
+          </div>
+          <div class="preferred-row">
+            <code>io-bound-async</code><span>await asyncio.sleep(1)</span
+            ><span>event-loop thread</span
+            ><span>Preferred for awaitable I/O</span>
+          </div>
+        </div>
+        <div class="benchmark-control">
+          <div>
+            <b>Live comparison</b
+            ><span
+              >Ten concurrent requests are sent to each I/O endpoint. Values are
+              measured after every click; browser connection limits and system
+              load may affect the totals</span
+            >
+          </div>
+          <button id="run-benchmark" type="button">Compare I/O handlers</button>
+          <div id="benchmark-result" class="result-panel" aria-live="polite">
+            <span class="placeholder">Total batch time will appear here</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="routes" class="lab-section">
+        <div class="section-heading route-heading">
+          <div>
+            <p class="eyebrow">APIRouter · request parameter sources</p>
+            <h2>FastAPI knows where every value must come from</h2>
+            <p>
+              The library and meeting-room domains are preserved exactly because
+              they are required by the assignment. The laboratory interface
+              shows how their request contracts are routed
+            </p>
+          </div>
+          <a class="text-link" href="/docs">Test every route in Swagger →</a>
+        </div>
+        <div class="route-board">
+          <article>
+            <span class="method post">BODY</span>
+            <h3>POST /api/v1/books</h3>
+            <p>
+              A Pydantic model means the JSON body is required and validated
+              before the endpoint runs
+            </p>
+            <button id="create-book" type="button">
+              Send valid BookCreate
+            </button>
+            <output id="book-result">Expected status: 201 Created</output>
+          </article>
+          <article>
+            <span class="method get">QUERY</span>
+            <h3>GET /api/v1/books</h3>
+            <p>
+              <code>available_only=true&amp;limit=10</code> changes filtering
+              without identifying a different resource
+            </p>
+            <button id="filter-books" type="button">Apply query filters</button>
+            <output id="filter-result">Expected status: 200 OK</output>
+          </article>
+          <article>
+            <span class="method header">HEADER</span>
+            <h3>GET /api/v1/users/me</h3>
+            <p>
+              <code>X-User-ID</code> carries request metadata. Route precedence
+              matters because the static path must be registered before the
+              dynamic path
+            </p>
+            <div class="route-order">
+              <code>/me</code><span>literal current user → before</span
+              ><code>/{user_id}</code><span>dynamic specific user</span>
+            </div>
+          </article>
+          <article>
+            <span class="method path">PATH</span>
+            <h3>GET /rooms/{room_id}</h3>
+            <p>
+              <code>room_id</code> identifies one resource. Body creates data,
+              headers authorize, and conflicts return 409
+            </p>
+            <div class="status-stack">
+              <span>201 Created</span><span>403 Forbidden</span
+              ><span>404 Not Found</span><span>409 Conflict</span
+              ><span>422 Unprocessable Entity</span>
+            </div>
+          </article>
+        </div>
+        <div class="architecture-strip">
+          <span>HTTP request</span><i>→</i><span>APIRouter</span><i>→</i
+          ><span>Path / Query / Header / Body</span><i>→</i
+          ><span>Pydantic validation</span><i>→</i><span>Endpoint</span><i>→</i
+          ><span>response_model</span><i>→</i><span>HTTP response</span>
+        </div>
+      </section>
+    </main>
+    <script src="/static/js/app.js" defer></script>
+  </body>
+</html>

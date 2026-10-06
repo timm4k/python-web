@@ -1,0 +1,162 @@
+.grouping-grid {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.75fr) 1.25fr;
+  gap: 18px;
+}
+.strategy-list,
+.task-rack {
+  padding: clamp(24px, 3vw, 36px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.strategy-list {
+  display: grid;
+  gap: 12px;
+}
+.strategy-list label,
+.scenario-card label {
+  align-items: flex-start;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: white;
+}
+.strategy-list label:has(input:checked),
+.scenario-card label:has(input:checked) {
+  border-color: var(--blue);
+  background: var(--soft-rose);
+}
+.strategy-list b,
+.strategy-list small,
+.scenario-card b,
+.scenario-card small {
+  display: block;
+}
+.strategy-list small,
+.scenario-card small {
+  margin-top: 4px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+.strategy-list button {
+  margin-top: 10px;
+}
+.strategy-note {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+.task-rack {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  align-content: start;
+}
+.task-rack > span {
+  display: grid;
+  min-height: 92px;
+  place-items: center;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--soft-mint);
+  text-align: center;
+  font:
+    700 0.76rem "Cascadia Code",
+    monospace;
+}
+.task-rack > span.failed {
+  color: var(--danger);
+  border-color: #e8a8b1;
+  background: var(--soft-rose);
+}
+.task-rack .result-panel {
+  grid-column: 1 / -1;
+}
+.split-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+.concept-panel {
+  box-shadow: none;
+}
+.concept-panel.inverse {
+  color: white;
+  background: var(--ink);
+  border-color: var(--ink);
+}
+.concept-panel.inverse .eyebrow {
+  color: var(--cyan);
+}
+.concept-panel.inverse .placeholder {
+  color: #d7e0ed;
+}
+.concept-panel > p:not(.eyebrow) {
+  max-width: 580px;
+  min-height: 72px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+.concept-panel.inverse > p:not(.eyebrow) {
+  color: #bdc8d9;
+}
+.code-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  min-height: 86px;
+  margin: 24px 0;
+}
+.code-flow span,
+.code-flow strong {
+  padding: 9px 11px;
+  border-radius: 7px;
+  background: #edf1f8;
+}
+.code-flow i {
+  color: var(--coral);
+  font-style: normal;
+  font-weight: 800;
+}
+.gate-visual {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin: 24px 0;
+}
+.gate-visual span {
+  padding: 12px 8px;
+  text-align: center;
+  border: 1px solid #47607e;
+  border-radius: 7px;
+  color: var(--cyan);
+}
+.gate-visual .waiting {
+  grid-column: 1 / -1;
+  color: #bdc8d9;
+  border-style: dashed;
+}
+.micro-explanation {
+  min-height: 82px;
+  margin: 0 0 22px;
+  padding: 14px;
+  border-left: 3px solid var(--coral);
+  background: rgb(255 255 255 / 8%);
+}
+.reagent-panel .micro-explanation {
+  background: var(--soft-plasma);
+}
+.micro-explanation b,
+.micro-explanation span {
+  display: block;
+}
+.micro-explanation span {
+  margin-top: 5px;
+  color: inherit;
+  opacity: 0.75;
+  line-height: 1.4;
+}

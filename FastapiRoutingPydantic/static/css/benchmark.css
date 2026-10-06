@@ -1,0 +1,59 @@
+.benchmark-table {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.benchmark-table > div {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr 1fr 1.5fr;
+  gap: 18px;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--line);
+  align-items: center;
+}
+.benchmark-table > div:last-child {
+  border-bottom: 0;
+}
+.benchmark-table .table-head {
+  color: white;
+  background: var(--ink);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.benchmark-table .warning-row {
+  background: var(--soft-rose);
+}
+.benchmark-table .preferred-row {
+  background: var(--soft-mint);
+}
+.benchmark-table span {
+  color: var(--muted);
+  line-height: 1.4;
+}
+.benchmark-control {
+  display: grid;
+  grid-template-columns: 1.2fr auto minmax(300px, 0.8fr);
+  gap: 22px;
+  align-items: center;
+  margin-top: 16px;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.benchmark-control b,
+.benchmark-control span {
+  display: block;
+}
+.benchmark-control span {
+  margin-top: 6px;
+  color: var(--muted);
+  line-height: 1.45;
+}
+.benchmark-control .result-panel {
+  min-height: 90px;
+  margin: 0;
+}

@@ -1,0 +1,108 @@
+.route-heading {
+  display: flex;
+  max-width: none;
+  justify-content: space-between;
+  align-items: end;
+  gap: 24px;
+}
+.text-link {
+  color: var(--blue);
+  font-weight: 750;
+}
+.route-board {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--line);
+}
+.route-board article {
+  min-height: 280px;
+  padding: 30px;
+  background: var(--surface);
+}
+.route-board h3 {
+  margin: 22px 0 10px;
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: 1.2rem;
+}
+.route-board p {
+  min-height: 48px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.route-board output {
+  display: block;
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 0.84rem;
+  overflow-wrap: anywhere;
+}
+.method {
+  display: inline-block;
+  padding: 5px 8px;
+  border-radius: 5px;
+  font:
+    800 0.7rem "Cascadia Code",
+    monospace;
+}
+.method.post {
+  color: #155e54;
+  background: #cef4ea;
+}
+.method.get {
+  color: #1644af;
+  background: #dce7ff;
+}
+.method.header {
+  color: #873c2d;
+  background: #ffe0d9;
+}
+.method.path {
+  color: #675315;
+  background: #f7e9ab;
+}
+.route-order,
+.status-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 28px;
+}
+.route-order code,
+.status-stack span {
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #edf1f8;
+}
+.route-order span {
+  color: var(--coral);
+  font-weight: 800;
+}
+.architecture-strip {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--soft-mint);
+}
+.architecture-strip span {
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: white;
+  font-weight: 750;
+}
+.architecture-strip i {
+  color: var(--blue);
+  font-style: normal;
+  font-weight: 900;
+}
