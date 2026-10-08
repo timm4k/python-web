@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Interactive FastAPI dependency injection and middleware laboratory"
+    />
+    <title>Energy Control Room</title>
+    <link rel="stylesheet" href="/static/css/base.css?v=4" />
+    <link rel="stylesheet" href="/static/css/layout.css?v=4" />
+    <link rel="stylesheet" href="/static/css/components.css?v=4" />
+    <link rel="stylesheet" href="/static/css/responsive.css?v=4" />
+    <script src="/static/js/app.js?v=2" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="wordmark" href="#top" aria-label="Energy Control Room home">
+        <span class="pulse-mark" aria-hidden="true"></span>
+        <span>ENERGY / INJECTION</span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="#catalog">Catalog</a>
+        <a href="#orders">Schemas</a>
+        <a href="#dependencies">DI</a>
+        <a href="#middleware">Middleware</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">
+            FastAPI control room · routing and dependency laboratory
+          </p>
+          <h1>Route the energy.<br /><em>Control every layer.</em></h1>
+          <p class="hero-intro">
+            An interactive laboratory for typed payloads, dependency chains,
+            protected routes, structured errors and observable HTTP middleware
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#catalog">Enter catalog</a>
+          </div>
+        </div>
+        <div class="signal-board" aria-label="Implemented concepts">
+          <div>
+            <span>01</span><strong>PATH + QUERY</strong
+            ><small>select a can</small>
+          </div>
+          <div>
+            <span>02</span><strong>PYDANTIC V2</strong
+            ><small>shape an order</small>
+          </div>
+          <div>
+            <span>03</span><strong>DEPENDS</strong
+            ><small>resolve identity</small>
+          </div>
+          <div>
+            <span>04</span><strong>MIDDLEWARE</strong
+            ><small>guard every request</small>
+          </div>
+        </div>
+      </section>
+
+      <section class="catalog-section" id="catalog">
+        <div class="section-heading split-heading">
+          <div>
+            <p class="eyebrow">Routing · Path / Query / Body / Header</p>
+            <h2>Filter the energy wall</h2>
+          </div>
+          <p>
+            Each control becomes a validated query parameter. The server filters
+            the in-memory catalog before pagination and returns ProductRead
+            models
+          </p>
+        </div>
+
+        <form class="filter-console" id="catalog-form">
+          <label>
+            Category
+            <select name="category">
+              <option value="">All lines</option>
+              <option value="classic">Classic</option>
+              <option value="ultra">Ultra</option>
+              <option value="juice">Juice</option>
+              <option value="punch">Punch</option>
+              <option value="reserve">Reserve</option>
+              <option value="nitro">Nitro</option>
+              <option value="rehab">Rehab</option>
+            </select>
+          </label>
+          <label>
+            Minimum price
+            <input
+              name="price_min"
+              type="number"
+              min="0"
+              step="1"
+              placeholder="0"
+            />
+          </label>
+          <label>
+            Maximum price
+            <input
+              name="price_max"
+              type="number"
+              min="0"
+              step="1"
+              placeholder="120"
+            />
+          </label>
+          <label class="toggle-field">
+            <input name="in_stock" type="checkbox" />
+            <span>In stock only</span>
+          </label>
+          <button class="button primary" type="submit">Run query</button>
+        </form>
+
+        <div class="request-preview">
+          <span>GET</span
+          ><code id="catalog-request">/products?skip=0&amp;limit=50</code>
+        </div>
+        <div class="product-grid" id="product-grid" aria-live="polite">
+          <p class="placeholder">Run the query to load the energy catalog</p>
+        </div>
+      </section>
+
+      <section class="schema-section" id="orders">
+        <div class="section-heading">
+          <p class="eyebrow">Pydantic inheritance · Create / Read / Update</p>
+          <h2>One order, three schema responsibilities</h2>
+          <p>
+            Create validates incoming customer data, Read adds server-owned
+            fields, and Update preserves omitted values through exclude_unset
+          </p>
+        </div>
+        <div class="schema-flow" aria-label="Order schema flow">
+          <article>
+            <small>REQUEST</small><strong>OrderCreate</strong>
+            <span>phone · address · items · promo</span>
+          </article>
+          <i>→</i>
+          <article class="active">
+            <small>DOMAIN</small><strong>OrderRead</strong>
+            <span>id · pending · total_price · created_at</span>
+          </article>
+          <i>→</i>
+          <article>
+            <small>PATCH</small><strong>OrderUpdate</strong>
+            <span>only fields explicitly supplied</span>
+          </article>
+        </div>
+        <div class="lab-panel order-lab">
+          <form id="order-form">
+            <label
+              >Customer name<input name="customer_name" value="Tate"
+            /></label>
+            <label
+              >Phone<input name="customer_phone" value="+380501234567"
+            /></label>
+            <label
+              >Delivery address<input
+                name="delivery_address"
+                value="12 Energy Avenue, Lviv"
+            /></label>
+            <label
+              >Promo code<input name="promo_code" value="ENERGYBOOST"
+            /></label>
+            <label
+              >Selected can
+              <select name="product_name" id="order-product">
+                <option value="" disabled selected>
+                  Loading available cans…
+                </option>
+              </select>
+            </label>
+            <label
+              >Quantity<input
+                name="quantity"
+                type="number"
+                min="1"
+                max="99"
+                value="2"
+            /></label>
+            <button class="button primary" type="submit">
+              Validate and create
+            </button>
+          </form>
+          <div class="result-panel" id="order-result">
+            <p class="placeholder">
+              The validated OrderRead object will appear here
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="dependency-section" id="dependencies">
+        <div class="section-heading split-heading">
+          <div>
+            <p class="eyebrow">
+              Dependency Injection · callable classes · yield cleanup
+            </p>
+            <h2>Identity moves through a dependency graph</h2>
+          </div>
+          <p>
+            The endpoint never searches API keys itself. FastAPI resolves the
+            user, checks ownership and wraps protected work in an audit
+            lifecycle
+          </p>
+        </div>
+        <div class="dependency-graph">
+          <article>
+            <small>HEADER</small><strong>X-API-Key</strong
+            ><span>untrusted input</span>
+          </article>
+          <i>→</i>
+          <article>
+            <small>CALLABLE CLASS</small><strong>APIKeyValidator()</strong
+            ><span>401 or typed user</span>
+          </article>
+          <i>→</i>
+          <article>
+            <small>YIELD DEPENDENCY</small><strong>audit_log</strong
+            ><span>before / finally</span>
+          </article>
+          <i>→</i>
+          <article>
+            <small>ENDPOINT</small><strong>create_note</strong
+            ><span>receives identity</span>
+          </article>
+        </div>
+        <div class="access-lab">
+          <div class="key-selector">
+            <button
+              type="button"
+              data-api-key="energy_remi_123"
+              class="selected"
+            >
+              Remi · user
+            </button>
+            <button type="button" data-api-key="energy_tatelin_456">
+              Tatelin · user
+            </button>
+            <button type="button" data-api-key="energy_admin_789">
+              Admin · all notes
+            </button>
+          </div>
+          <form id="note-form">
+            <label
+              >Flavor note title<input
+                name="title"
+                value="Ultra White tasting note"
+            /></label>
+            <label
+              >Observation<textarea name="content">
+Clean citrus profile with a dry finish</textarea
+              >
+            </label>
+            <button class="button primary" type="submit">
+              Create protected note
+            </button>
+          </form>
+          <div class="result-panel" id="note-result">
+            <p class="placeholder">
+              Choose an identity and create an owner-bound note
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="middleware-section" id="middleware">
+        <div class="section-heading">
+          <p class="eyebrow">
+            Exception handlers · CORS · TrustedHost · rate limiting
+          </p>
+          <h2>Watch one request cross every gate</h2>
+          <p>
+            Shortening a URL produces a real response whose headers reveal
+            tracing; invalid input is flattened by the global validation handler
+          </p>
+        </div>
+        <div class="middleware-stack">
+          <div>
+            <b>01</b><strong>Trusted host</strong
+            ><span>reject unknown Host</span>
+          </div>
+          <div>
+            <b>02</b><strong>CORS</strong><span>allow two SPA origins</span>
+          </div>
+          <div>
+            <b>03</b><strong>Rate limit</strong
+            ><span>10 requests / 60 seconds / IP</span>
+          </div>
+          <div>
+            <b>04</b><strong>Tracing</strong
+            ><span>request ID + process time</span>
+          </div>
+          <div>
+            <b>05</b><strong>Endpoint</strong><span>validated short link</span>
+          </div>
+        </div>
+        <div class="lab-panel link-lab">
+          <form id="link-form">
+            <label
+              >Original URL<input
+                name="original_url"
+                value="https://example.com/energy-guide"
+            /></label>
+            <label
+              >Custom alias<input name="custom_alias" value="ultra-guide"
+            /></label>
+            <button class="button primary" type="submit">
+              Send through stack
+            </button>
+          </form>
+          <div class="result-panel" id="link-result">
+            <p class="placeholder">
+              Response body and middleware headers will appear here
+            </p>
+          </div>
+        </div>
+        <div class="status-rail">
+          <span><b>201</b> created</span><span><b>204</b> deleted</span>
+          <span><b>400</b> conflict</span><span><b>401</b> key</span>
+          <span><b>403</b> role</span><span><b>404</b> missing</span>
+          <span><b>422</b> shape</span><span><b>429</b> limit</span>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
