@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Music production workflow powered by async SQLAlchemy and Alembic"
+    />
+    <title>Cadence Forge</title>
+    <link rel="stylesheet" href="/static/css/base.css?v=2" />
+    <link rel="stylesheet" href="/static/css/layout.css?v=2" />
+    <link rel="stylesheet" href="/static/css/components.css?v=3" />
+    <script src="/static/js/app.js?v=2" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a href="#top" class="wordmark"><span>CF</span> CADENCE FORGE</a>
+      <nav aria-label="Primary navigation">
+        <a href="#session">Session</a>
+        <a href="#board">Board</a>
+        <a href="#relationships">ORM</a>
+        <a href="#migrations">Migrations</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">ASYNC SQLALCHEMY · ALEMBIC · FASTAPI</p>
+          <h1>Shape the sound<br /><em>Track every movement</em></h1>
+          <p class="lead">
+            Plan arrangements and rehearsals with musicians, instrument tags and
+            a shared production board
+          </p>
+          <a class="button" href="#session">Open the session</a>
+        </div>
+        <div class="vinyl" aria-hidden="true"><span></span></div>
+      </section>
+
+      <section id="session" class="section session-console">
+        <header class="section-heading">
+          <p class="eyebrow">LIVE SESSION</p>
+          <h2>Build a musical workflow</h2>
+          <p>
+            Start with a musician, choose an existing musical tag or add your
+            own, then create a task assigned to that musician
+          </p>
+        </header>
+        <div class="form-grid">
+          <form id="user-form" class="console-card">
+            <small>01 · USER</small>
+            <h3>Register musician</h3>
+            <p class="field-help">
+              Create the person responsible for production work — saved
+              musicians appear in the Owner menu automatically
+            </p>
+            <label
+              >Handle<input name="username" value="remi_keys" required
+            /></label>
+            <p class="field-help">
+              Use a unique handle with letters, numbers, underscores or hyphens,
+              such as remi_keys
+            </p>
+            <label
+              >Email<input
+                name="email"
+                type="email"
+                value="remi@cadence.example"
+                required
+            /></label>
+            <p class="field-help">
+              Enter a valid, unique email — this demo stores the address but
+              does not send messages
+            </p>
+            <div>
+              <h4>Saved musicians</h4>
+              <div id="musician-roster" class="saved-items"></div>
+            </div>
+            <button class="button" type="submit">Create musician</button>
+          </form>
+          <form id="tag-form" class="console-card accent-purple">
+            <small>02 · TAG</small>
+            <h3>Add instrument tag</h3>
+            <p class="field-help">
+              Tags label an instrument or workflow stage and can be shared by
+              several tasks
+            </p>
+            <label
+              >Tag name<input name="name" value="synthesizer" required
+            /></label>
+            <p class="field-help">
+              Use a short name such as violin or mixing — names are trimmed,
+              stored in lowercase and must be unique
+            </p>
+            <div>
+              <h4>Available tags</h4>
+              <div id="available-tags" class="saved-items"></div>
+            </div>
+            <p class="field-help">
+              The initial five tags come from an Alembic seed migration — new
+              tags come from this form
+            </p>
+            <button class="button purple" type="submit">Create tag</button>
+          </form>
+          <form id="task-form" class="console-card accent-coral">
+            <small>03 · TASK</small>
+            <h3>Schedule production work</h3>
+            <p class="field-help">
+              Describe one concrete step, assign its musician and choose any
+              relevant tags — the saved task starts in To do
+            </p>
+            <label
+              >Title<input
+                name="title"
+                value="Arrange the Midnight Sonata bridge"
+                required
+            /></label>
+            <label
+              >Production notes<textarea name="description">
+Layer piano voicings beneath the guitar counterline</textarea
+              >
+            </label>
+            <p class="field-help">
+              Title identifies the work — optional notes describe the desired
+              result or technique
+            </p>
+            <div class="split">
+              <label
+                >Priority<input
+                  name="priority"
+                  type="number"
+                  min="0"
+                  max="10"
+                  value="8"
+              /></label>
+              <label
+                >Due date<input
+                  name="due_date"
+                  type="text"
+                  placeholder="YYYY-MM-DD"
+                  pattern="\d{4}-\d{2}-\d{2}"
+                  inputmode="numeric"
+                  aria-describedby="schedule-help"
+              /></label>
+            </div>
+            <p id="schedule-help" class="field-help">
+              Priority runs from 0 to 10, where 10 is most urgent — the optional
+              date uses YYYY-MM-DD and is checked by the API
+            </p>
+            <label
+              >Owner<select id="owner-select" name="owner_id" required></select
+            ></label>
+            <p class="field-help">
+              Owners are loaded from active musicians saved in your database
+            </p>
+            <label
+              >Tags<select
+                id="tag-select"
+                name="tag_ids"
+                multiple
+                size="8"
+                aria-describedby="tags-help"
+              ></select
+            ></label>
+            <p id="tags-help" class="field-help">
+              Hold Ctrl or Cmd to select separate tags, or Shift to select a
+              range — tags are optional
+            </p>
+            <button class="button coral" type="submit">
+              Create production task
+            </button>
+          </form>
+        </div>
+        <div id="action-result" class="result-panel" aria-live="polite">
+          Loading musicians, tags and tasks from your database
+        </div>
+      </section>
+
+      <section id="board" class="section board-section">
+        <header class="section-heading horizontal">
+          <div>
+            <p class="eyebrow">SELECTINLOAD · FILTER · PAGINATION</p>
+            <h2>Production board</h2>
+          </div>
+          <button id="refresh-board" class="button outline" type="button">
+            Refresh session
+          </button>
+        </header>
+        <form id="board-filter" class="board-filter">
+          <label
+            >Production stage<select name="status">
+              <option value="">All stages</option>
+              <option value="todo">To do</option>
+              <option value="in_progress">In progress</option>
+              <option value="done">Done</option>
+            </select></label
+          >
+          <label
+            >Skip tasks<input
+              name="offset"
+              type="number"
+              min="0"
+              value="0"
+              required
+          /></label>
+          <label
+            >Page size<input
+              name="limit"
+              type="number"
+              min="1"
+              max="100"
+              value="20"
+              required
+          /></label>
+          <button class="button outline" type="submit">Load task page</button>
+        </form>
+        <p class="field-help">
+          Choose a stage, skip the first matching tasks and set how many to load
+          — lane counts describe this page, not the entire database
+        </p>
+        <p class="field-help">
+          The board loads saved tasks with their owners and tags — Move advances
+          To do → In progress → Done, then reopens the task, while Delete
+          permanently removes it and its studio comments
+        </p>
+        <div class="board">
+          <div class="lane" data-status="todo">
+            <header><span>TO DO</span><b id="todo-count">0</b></header>
+            <div class="task-list"></div>
+          </div>
+          <div class="lane" data-status="in_progress">
+            <header>
+              <span>IN PROGRESS</span><b id="progress-count">0</b>
+            </header>
+            <div class="task-list"></div>
+          </div>
+          <div class="lane" data-status="done">
+            <header><span>DONE</span><b id="done-count">0</b></header>
+            <div class="task-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="relationships" class="section relationship-section">
+        <header class="section-heading">
+          <p class="eyebrow">DECLARATIVEBASE · MAPPED[T] · RELATIONSHIP</p>
+          <h2>The relational ensemble</h2>
+        </header>
+        <div class="relation-map">
+          <article>
+            <small>ONE</small>
+            <h3>User</h3>
+            <p>Musician identity</p>
+          </article>
+          <i>1 → N</i>
+          <article>
+            <small>MANY</small>
+            <h3>Task</h3>
+            <p>Arrangement or rehearsal step</p>
+          </article>
+          <i>N ↔ N</i>
+          <article>
+            <small>MANY</small>
+            <h3>Tag</h3>
+            <p>Instrument or workflow label</p>
+          </article>
+          <article class="comment-node">
+            <small>CASCADE</small>
+            <h3>Comment</h3>
+            <p>Studio feedback bound to a task and author</p>
+          </article>
+        </div>
+        <p class="field-help">
+          One musician owns many tasks — each task can share tags with other
+          tasks through task_tags — studio comments belong to both a task and an
+          author and are deleted with their task
+        </p>
+        <p class="field-help">
+          The API loads owners and tags in batches with selectinload, so showing
+          several tasks does not run a separate relationship query for each card
+        </p>
+      </section>
+
+      <section id="migrations" class="section migration-section">
+        <header class="section-heading">
+          <p class="eyebrow">UPGRADE ↔ DOWNGRADE</p>
+          <h2>Explore the database score</h2>
+          <p>
+            Select a revision to see what it adds, what its rollback removes and
+            which terminal command applies it — this explorer explains
+            migrations without changing your database
+          </p>
+        </header>
+        <ol class="timeline">
+          <li>
+            <button
+              type="button"
+              data-revision="0001_initial"
+              data-upgrade="Creates musicians, tasks, tags and their many-to-many links"
+              data-downgrade="Removes the four initial tables and all their records"
+            >
+              <b>0001</b><strong>Initial score</strong
+              ><span>users · tasks · tags · task_tags</span>
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              data-revision="0002_due_date"
+              data-upgrade="Adds an optional deadline to each production task"
+              data-downgrade="Removes due_date and its stored dates"
+            >
+              <b>0002</b><strong>Deadline cue</strong
+              ><span>tasks.due_date</span>
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              data-revision="0003_status_index"
+              data-upgrade="Adds an index to speed up task status filtering"
+              data-downgrade="Removes the index while preserving task records"
+            >
+              <b>0003</b><strong>Faster lookup</strong
+              ><span>index on tasks.status</span>
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              data-revision="0004_comments"
+              data-upgrade="Creates studio comments linked to a task and author"
+              data-downgrade="Removes the comments table and all studio comments"
+            >
+              <b>0004</b><strong>Studio feedback</strong
+              ><span>comments table</span>
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              data-revision="0005_seed_tags"
+              data-upgrade="Seeds composition, rehearsal, guitar, keyboards and recording"
+              data-downgrade="Removes seeded tags and their task associations"
+            >
+              <b>0005</b><strong>Musical vocabulary</strong
+              ><span>seed tags with lightweight tables</span>
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              data-revision="0006_default_tag"
+              data-upgrade="Assigns composition to existing untagged tasks and records these additions"
+              data-downgrade="Removes only recorded additions, preserving previous tag assignments"
+            >
+              <b>0006</b><strong>Existing repertoire</strong
+              ><span>assign composition to untagged tasks</span>
+            </button>
+          </li>
+        </ol>
+        <div class="migration-inspector">
+          <h3 id="revision-title"></h3>
+          <dl>
+            <dt>Upgrade</dt>
+            <dd id="revision-upgrade"></dd>
+            <dt>Downgrade</dt>
+            <dd id="revision-downgrade"></dd>
+          </dl>
+          <label
+            >Command preview<select id="migration-action">
+              <option value="upgrade">Upgrade to selected revision</option>
+              <option value="current">Show current database revision</option>
+              <option value="history">Show complete history</option>
+              <option value="check">Compare database with ORM models</option>
+            </select></label
+          >
+          <div class="command-row">
+            <code id="migration-command"></code
+            ><button id="copy-migration" class="button outline" type="button">
+              Copy command
+            </button>
+          </div>
+          <p class="field-help">
+            Run copied commands in the project terminal with .venv active and
+            DATABASE_URL set — upgrade applies every missing revision up to the
+            target
+          </p>
+          <p class="field-help">
+            The application needs the complete schema — run alembic upgrade head
+            before starting it, and explore earlier revisions only in a
+            disposable database
+          </p>
+          <p class="field-help">
+            Rollback runs with alembic downgrade -1 in the terminal — removing
+            tables or columns also removes their data, so use a disposable
+            database for practice
+          </p>
+          <p id="copy-result" role="status"></p>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
